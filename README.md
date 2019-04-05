@@ -10,6 +10,6 @@ H3D is written entirely in C++ and uses OpenGL for graphics rendering and OpenHa
 
 ## H3D Releases ##
 
-This is the 1.4 version of H3D API.
+This is the 1.5 version of H3D API.
 
 Released on: Tue, 31-Jul-2007
