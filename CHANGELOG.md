@@ -100,7 +100,7 @@ New functions:
 New classes:
 - PlaybackHapticsDevice
 
-### H3DPhysics (1.3)###
+### H3DPhysics (1.3) ###
 - Generated header is moved to CMake build directory and can only be found in H3DPhysics/include after INSTALL project has been built.
 - Speed optimizations that could affect some compilers.
 - Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
