@@ -10,9 +10,6 @@ H3D is written entirely in C++ and uses OpenGL for graphics rendering and OpenHa
 
 ## H3D Releases ##
 
-This is the 2.0 version of H3D API.
-Released on: Mon, 10-Nov-2008
+This is the 2.1 version of H3D API.
 
-The main difference between H3D API 2.0 and 1.5 is that the haptics part is now built on SenseGraphics own haptics library called HAPI.
-HAPI is also OpenSource and can be downloaded in the releases.
-HAPI 1.0 is required to build H3D API 2.0.
+Released on: Tue, 29-Sep-2009
