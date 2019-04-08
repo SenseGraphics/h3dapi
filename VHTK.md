@@ -1,4 +1,4 @@
-README
+Volume Haptics Toolkit
 ==================
 
 ## Overview ##
@@ -17,7 +17,7 @@ system is highly integrated in the functionality of VHTK. Changes in fields cont
 filters propagates an event to every node involved, forming a conceptual multi-modal data pipeline,
 similar to those of Visualization Toolkit, VTK, and AVS/Express.
 
-## VHTK Releases ##
+## Releases ##
 
 The latest release of Volume Haptics Toolkit is version 1.12.0 for H3D API.
 
