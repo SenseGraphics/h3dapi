@@ -342,7 +342,7 @@ New classes:
 - MLHIHapticsDevice
 - EntactHapticsDevice
 
-### H3DPhysics (1.2)###
+### H3DPhysics (1.2) ###
 - H3DPhysics additions to H3DAPIs python interface to get utility functions
 in python when using H3DPhysics.
 - The package is now called H3DPhysics instead of RigidBodyPhysics.
