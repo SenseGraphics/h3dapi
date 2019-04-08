@@ -1,5 +1,143 @@
 CHANGELOG
 ==================
+- [v2.3.0](#v2-3-0)
+- [v2.2.0](#v2-2-0)
+
+## v2.3.0 ##
+- [H3DAPI](#h3dapi-2-3-)
+- [H3DUtil](#h3dutil-1-3-)
+- [HAPI](#hapi-1-3-)
+- [H3DPhysics](#h3dphysics-1-3-)
+- [MedX3D](#medx3d-1-4-)
+- [UI](#ui-2-3-)
+
+### H3DAPI (2.3) ###
+- Generated header is moved to CMake build directory and can only be found in H3DAPI/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Added a InstallH3DAPIAndExternals.cmake package file which can be used by applications to package up needed files by the current H3DAPI build.
+- Added profiling of haptics and graphics thread if built with profile support. Profiling is not enabled in the released binaries.
+- A lot of performance improvements. H3DAPI should render faster in many cases now.
+- Scene::findNode* functions now handle Inline. FindNode* functions are now static.
+- Updates to fix artifacts with GPU shadows.
+- X3DTextureNode nodes can now have their current state saved as PNG.
+- Fixed issues with QUAD_BUFFERED_STEREO.
+- Updates to handle protos better.
+- If GLUT gameMode is used then GLUTWindow now still handle keyboard inputs properly.
+- Many updates to FrameBufferTextureGenerator. Such as setting local NavigationInfo, handling shadows, support for new DEPTH_BUFFER types and support for external color and/or depth buffer for buffer storage. It should also now work properly with QUAD_BUFFERED_STEREO mode.
+- Memory leak fixes.
+- Some field types had unitialized default values, this is fixed now.
+- Added optional COPY option for USE statement. Can be useful when there are nodes which does not handle the DEF/USE system that well.
+- Use F11 to switch to/from fullscreen in H3DLoad.
+- Renamed FindTeem.cmake to FindH3DTeem.cmake in order to use CMakes new FindTeem module if it exists. Did the same for FindFreeType.cmake.
+- DirectShowDecoder now plays wmv files.
+- PointSet, LineSet, IndexedLineSet now have vertex attribute support.
+- Doxygen documentation now links to python documentation as well.
+- Extrusion now calculates normal per triangle face instead of per quad face.
+- Improved the static and dynamic database so getField function is now faster.
+- H3DWindowNode has a takeScreenShot static function.
+- Made it possible to put multiple objects in a ShadowTransform node.
+
+New H3D nodes:
+- FBODebugger
+- GaussianFilterShader
+- GeometryGroup
+- PlaybackDevice
+- NoiseTexture
+- NoiseTexture3D
+- RazerHydraSensor
+- SimpleAudioClip
+
+New python functionality:
+- Added getTypeName, getValueAsString, setValueAsString, setName, getName, getFullName, isUpToDate, upToDate, replaceRoute, replaceRouteNoEvent, unrouteAll, getOwner and setOwner functions for fields.
+- Added takeScreenshot and findNodes function.
+
+H3DViewer updates:
+- Can now copy current log text to clipboard.
+- Added dialog to show profiling information if profiling is enabled.
+- TreeViewer only expand X3DGroupingNode at first view now.
+- QUAD_BUFFERED_STEREO should work properly again.
+- Updates to handle QUAD_BUFFERED_STEREO on an NVIDIA_3DVISION ready display with a non-quadro card. Note that this requires a special built wxWidgets. WxWidgets adopted a patch supplied by us so in the future this should work for standard releases of WxWidgets.
+- Faster startup due to optimizations.
+
+Compatability issues:
+- Changed default depth buffer type of FrameBufferTextureGenerator.
+- Not binary compatible due to changes to database and inheritance for some nodes.
+- ShadowTransform::shadowVolume is now of MFNode type, was SFNode.
+- Fields beamWidth and cutOffAngle in SpotLight node now have default values which makes sense as per update of X3D specification 3.3.
+
+### H3DUtil (1.3)###
+- Generated header is moved to CMake build directory and can only be found in H3DUtil/include after INSTALL project has been built.
+- Added profiling capabilities through H3DTimer.
+- Renamed FindTeem.cmake to FindH3DTeem.cmake in order to use CMakes new FindTeem module if it exists.
+- Speed optimizations that could affect some compilers.
+- Fixes to properly remove threads in all cases.
+- Added a InstallH3DUtilAndExternals.cmake package file which can be used by applications to package up needed files by the current H3DUtil build.
+- Properly pack ACKNOWLEDGMENTS file.
+- Memory leak fixes.
+- Added CMake option to include visual leak detector in H3DUtil.
+- Updates to CMake build system to build properly when TortoiseSVN is installed
+but the current H3D build is not a TortoiseSVN checkout.
+- Added enable/disable functions in Console which allow thread-safe disabling of console output.
+
+New classes:
+- H3DTimer
+
+New functions:
+- saveFreeImagePNG
+- Image::setByteAlignment
+
+### HAPI (1.3) ###
+- Generated header is moved to CMake build directory and can only be found in HAPI/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Added profiling of haptic thread.
+- Moved fparser to be included as stand alone library.
+- Added a InstallHAPIAndExternals.cmake package file which can be used by applications to package up needed files by the current HAPI build.
+- Improved thread safety of GodObjectRenderer and RuspiniRenderer.
+- Fixed crashes on Windows caused by trying to use PhantomHapticsDevice on a system without OpenHaptics.
+
+New classes:
+- PlaybackHapticsDevice
+
+### H3DPhysics (1.3)###
+- Generated header is moved to CMake build directory and can only be found in H3DPhysics/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Updates to build on MinGW.
+- Memory leak fixes.
+- Doxygen documentation now links to python documentation as well.
+- Fixes to handle sliderJoint better for most physics engines.
+- Fixes to CollisionSpace and ODE.
+- Changed signature of some callback functions that are never used as callbacks. They now have return type void.
+- IndexedHexaSet, IndexedTetraSet, IndexedPointSet and IndexedElementSet are now more properly implemented and behaves like for example IndexedTriangleSet when it comes to colors, normals and texture coordinates.
+- The SoftBody node no longer assumes that its geometry is of type IndexedTetraSet but accepts all nodes with coord and index field.
+
+New fields:
+- IndexedTetraSet::renderMode
+- SliderJoint::sliderForce
+- H3DSoftBodyLoader::filename is now H3DSoftBodyLoader::url and is an MField. filename can be used a while longer at X3D level. On C++ level it can not.
+- CollidableShape::clipPlanes
+- CollisionCollection::collidableExceptionGroups
+
+New nodes:
+- CollidableExceptionGroup
+
+### MedX3D (1.4)###
+- Generated header is moved to CMake build directory and can only be found in MedX3D/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Memory leak fixes which added some functions.
+- Fixed MultiVolumeRaycaster since it had quite a few bugs in it.
+
+Removed fields:
+- Removed multiVolumeRayCaster::depthTexture field due to it being a forgotten debug output which no longer affected anything.
+
+### UI (2.3)###
+- Generated header is moved to CMake build directory and can only be found in UI/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Renamed FindFreeType.cmake to FindH3DFreetype.cmake in order to use CMakes new FindFreetype module if it exists.
 
 ## v2.2.0 ##
 - [H3DAPI](#h3dapi-2-2-)
@@ -10,7 +148,6 @@ CHANGELOG
 - [UI](#ui-2-2-)
 
 ### H3DAPI (2.2) ###
-#### Changes for version 2.2 of H3DAPI: ####
 - Added functionality for more convenient Import/Export use of Inlined files.
 - Added a node clone function. Exposed in python.
 - Some DynamicTransform now only updates when value actually change.
@@ -245,4 +382,5 @@ Removed nodes:
 - Exposed appearance and textAppearance field for all labeled widgets.
 - CMake update to support various compilers on various systems.
 - Added isActive to SliderBar, indicates if sliderbar is in use.
+
 

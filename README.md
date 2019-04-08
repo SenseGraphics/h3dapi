@@ -154,14 +154,14 @@ For soft body physics Bullet is default. PhysX can also be used.
 - The SoftBody node no longer assumes that its geometry is of type IndexedTetraSet but accepts all nodes with coord and index field.
 
 New fields:
-IndexedTetraSet::renderMode
-SliderJoint::sliderForce
+- IndexedTetraSet::renderMode
+- SliderJoint::sliderForce
 - H3DSoftBodyLoader::filename is now H3DSoftBodyLoader::url and is an MField. filename can be used a while longer at X3D level. On C++ level it can not.
-CollidableShape::clipPlanes
-CollisionCollection::collidableExceptionGroups
+- CollidableShape::clipPlanes
+- CollisionCollection::collidableExceptionGroups
 
 New nodes:
-CollidableExceptionGroup
+- CollidableExceptionGroup
 
 ### MedX3D ###
 Source package for the toolkit MedX3D 1.4. Source builds against H3DAPI 2.3.0.
