@@ -66,7 +66,7 @@ Compatability issues:
 - ShadowTransform::shadowVolume is now of MFNode type, was SFNode.
 - Fields beamWidth and cutOffAngle in SpotLight node now have default values which makes sense as per update of X3D specification 3.3.
 
-### H3DUtil (1.3)###
+### H3DUtil (1.3) ###
 - Generated header is moved to CMake build directory and can only be found in H3DUtil/include after INSTALL project has been built.
 - Added profiling capabilities through H3DTimer.
 - Renamed FindTeem.cmake to FindH3DTeem.cmake in order to use CMakes new FindTeem module if it exists.
@@ -123,7 +123,7 @@ New fields:
 New nodes:
 - CollidableExceptionGroup
 
-### MedX3D (1.4)###
+### MedX3D (1.4) ###
 - Generated header is moved to CMake build directory and can only be found in MedX3D/include after INSTALL project has been built.
 - Speed optimizations that could affect some compilers.
 - Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
@@ -133,7 +133,7 @@ New nodes:
 Removed fields:
 - Removed multiVolumeRayCaster::depthTexture field due to it being a forgotten debug output which no longer affected anything.
 
-### UI (2.3)###
+### UI (2.3) ###
 - Generated header is moved to CMake build directory and can only be found in UI/include after INSTALL project has been built.
 - Speed optimizations that could affect some compilers.
 - Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
@@ -294,7 +294,7 @@ deviceInfo must be set using a list (SFInt32 -> MFInt32).
 - preRender/postRender C++ functions must be updated due to change of handling
 OpenGL attribute stack (it is quite small).
 
-### H3DUtil (1.2)###
+### H3DUtil (1.2) ###
 - CMake updates to configure build for MinGW toolchain.
 - New constructors to Matrix4f(d) to construct matrix from position,
 rotation and scale parameters.
@@ -357,7 +357,7 @@ are included at startup.
 Bullet implementation is fairly stable.
 - Improved bullet support. Joint types are now supported with Bullet.
 
-### MedX3D (1.3)###
+### MedX3D (1.3) ###
 - Fixes to raycaster for AMD cards.
 - CMake updates to configure properly for several compilers.
 - Made sure every node has an example file.
@@ -377,7 +377,7 @@ New nodes
 Removed nodes:
 - IsoSurfaceVolumeStyle
 
-### UI (2.2)###
+### UI (2.2) ###
 - All UI nodes now have examples.
 - Exposed appearance and textAppearance field for all labeled widgets.
 - CMake update to support various compilers on various systems.
