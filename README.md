@@ -17,9 +17,9 @@ substitute or modify any component of the haptics rendering process.
 
 ## H3D Releases ##
 
-This is the 2.2.0 version of H3D API.
+This is the 2.3.0 version of H3D API.
 
-Released on: Tue, 16-Apr-2013
+Released on: Fri, 13-Jun-2014
 
 ## Libraries ##
 Here follows a description of each library and their changes.
@@ -31,238 +31,140 @@ Here follows a description of each library and their changes.
 - [UI](#UI)
 
 ### H3DAPI ###
-#### Changes for version 2.2 of H3DAPI: ####
-- Added functionality for more convenient Import/Export use of Inlined files.
-- Added a node clone function. Exposed in python.
-- Some DynamicTransform now only updates when value actually change.
-- MField::insert() functions fixes to take const_iterator.
-- Fix so that ImportLibrary supports specification of several optional paths to
-a library in the url field
-- Many CMake updates to handle configuration settings for building with various
-compilers.
-- New stereo formats, HDMI_FRAME_PACKED_720P and HDMI_FRAME_PACKED_1080P
-and NVIDIA_3DVISION
-- Added support for tesselation shaders.
-- Added Testsuit (well first version) which can be used to detemine if
-rendering with vertex buffer objects is faster for a specific system.
-- Added support for giving inline scripts as CDATA for xml files.
-- TwoSidedMaterial::backTransparency is now properly used.
-- Fixed bug in CoordinateDeformer. It was always deforming for device 0.
-- Fixed issue with obtaining wrong ResourceResolver instance.
-- Added force and torque limits to haptics devices.
-- Added program settings functionality.
-- VRML parser updates to work properly with DEF/USE.
-- A DeformableShape instances first occurance in scene graph detemines its deformation.
-- deviceInfo field common for all force effects. It is now a MFInt32.
-- New base class H3DSingleTextureNode for texture nodes which specify a texture using a
-single texture id.
-- Fixed use of wrong coordinate system in ProximitySensor.
-- Proper implementation of calibration field in PhantomDevice.
-- Extrusion updates to comply with latest spec.
-- H3DViewer navigation keyboard short-cut now need Alt button pressed.
-- Support for including dynamic fields in writeNodeToX3D functions.
-- Updates for better support of the X3D proto system.
-- H-anim X3D component support.
-- Fixed variuos bugs with textures.
-- Added generated shader nodes framework.
-- Updates to make it easier to configure correct stereo for head mounted displays.
-- Support for float internal texture formats.
-- Support for full screen anti-aliasing.
-- UnityBuild option for users that frequently recompile the API and want to save time.
-- H3DViewer use wxWidgets 2.9 and wxPropertyGrid feature.
-- 64 bit builds of external libraries.
-- DEF is no longer an alternative to moduleName for a PythonScript.
-- Documentation now contains a page listing all nodes and their fields.
+#### Changes for version 2.3 of H3DAPI: ####
+- Generated header is moved to CMake build directory and can only be found in H3DAPI/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Added a InstallH3DAPIAndExternals.cmake package file which can be used by applications to package up needed files by the current H3DAPI build.
+- Added profiling of haptics and graphics thread if built with profile support. Profiling is not enabled in the released binaries.
+- A lot of performance improvements. H3DAPI should render faster in many cases now.
+- Scene::findNode* functions now handle Inline. FindNode* functions are now static.
+- Updates to fix artifacts with GPU shadows.
+- X3DTextureNode nodes can now have their current state saved as PNG.
+- Fixed issues with QUAD_BUFFERED_STEREO.
+- Updates to handle protos better.
+- If GLUT gameMode is used then GLUTWindow now still handle keyboard inputs properly.
+- Many updates to FrameBufferTextureGenerator. Such as setting local NavigationInfo, handling shadows, support for new DEPTH_BUFFER types and support for external color and/or depth buffer for buffer storage. It should also now work properly with QUAD_BUFFERED_STEREO mode.
 - Memory leak fixes.
-- Support for rendering using vertex buffer object of nodes IndexedTriangleSet, Sphere, Cylinder,
-ElevationGrid and SuperShape.
-- Fixes to stereo modes HORIZONTAL_INTERLACED, VERTICAL_INTERLACED and VERTICAL_INTERLACED_GREEN_SHIFT.
-- Tangent space normal maps in PhongShader node and automatic tangent vertex attribute
-generation for IndexedTriangleSet/IndexedFaceSet.
-- Support for haptics devices from Haption (VirtuoseDevice).
-- PythonScript cleanup on destruction fixes.
-- h3dload.ini is now stored in users location if user do not have access rights to
-write to default location.
-- GraphicsCachingOptions is now named GraphicsOptions.
-- X3DPointingDeviceSensor updates to comply with X3D specification.
-Also fixed other errors with X3DPointingDeviceSensors.
-- Added support for geometry shaders.
-- Fixed maxDistance issues with HapticLayeredGroup.
-- SpiderMonkey updates. That is much better ECMAscript support.
-- ToggleGroup and Clipplane can now be set to work per haptics device.
-- Fix bugs with dual windows navigation
-- Several new x3d example files to cover all nodes.
-- Updates to get correct default headlight in stereo rendering.
-- Updates to Shadow geometries and shadows can be done by shaders.
-- Several updates to multiPassTransparency.
-- Added resolveURLAsFolder functionality
+- Some field types had unitialized default values, this is fixed now.
+- Added optional COPY option for USE statement. Can be useful when there are nodes which does not handle the DEF/USE system that well.
+- Use F11 to switch to/from fullscreen in H3DLoad.
+- Renamed FindTeem.cmake to FindH3DTeem.cmake in order to use CMakes new FindTeem module if it exists. Did the same for FindFreeType.cmake.
+- DirectShowDecoder now plays wmv files.
+- PointSet, LineSet, IndexedLineSet now have vertex attribute support.
+- Doxygen documentation now links to python documentation as well.
+- Extrusion now calculates normal per triangle face instead of per quad face.
+- Improved the static and dynamic database so getField function is now faster.
+- H3DWindowNode has a takeScreenShot static function.
+- Made it possible to put multiple objects in a ShadowTransform node.
 
 New H3D nodes:
-- ComposedGeneratedShader
-- EntactDevice
-- EnvironmentMapShader
-- FrameBufferTextureGenerator
-- FullScreenRectangle
-- GeneralDirectionalLight
-- GeneralPointLight
-- GeneralSpotlight
-- GeneratedTexture
-- GeneratedTexture3D
-- GraphicsHardwareInfo
-- HAnimDisplacer
-- HAnimHumanoid
-- HAnimJoint
-- HAnimSegment
-- HAnimSite
-- LayeredRenderer
-- MLHIDevice
-- MultiDeviceSurface
-- MultiRenderTargetShader
-- NormalShader
-- PhongShader
-- RenderTargetSelectGroup
-- RotationalSpringEffect
-- ShaderCombiner
-- ShadowTransform
-- VirtuoseDevice
-
-Fields added to existing nodes:
-- ClipPlane - hapticsOnDevice
-- ComposedShader - transparencyDetectMode
-- CoordinateDeformer - deviceAlgorithm
-- FakeHapticsDevice - deviceName
-- ForceField - torque
-- GlobalSettings - x3dROUTESendsEvent, loadTexturesInThread, renderMode
-- GraphicsOptions - useDefaultShadows, defaultShadowDarkness, preferVertexBufferObject, defaultShadowGeometryAlgorithm
-- H3DHapticsDevice - forceLimit, torqueLimit
-- H3DWindowNode - clipDistances
-- Inline - importMode, traverseOn
-- NavigationInfo - nearVisibilityLimit
-- OrthoViewpoint - retainAspectRatio
-- PhantomDevice - motorTemperatures
-- RenderProperties - alphaFunc, alphaFuncValue, blendFuncSrcFactorRGB,
-- blendFuncSrcFactorAlpha, blendFuncDstFactorRGB,
-- blendFuncDstFactorAlpha, blendEquationRGB,
-- blendEquationAlpha, blendColor
-- RuspiniRenderer - alwaysFollowSurface
-- SpringEffect - damping, positionInterpolation, interpolatedPosition
-- ToggleGroup - hapticsOnDevice
-- TransformInfo - outputGLMatrices, glModelViewMatrix, glModelViewMatrixInverse,
-- glProjectionMatrix, glProjectionMatrixInverse
-
-Deprecated nodes:
-- GraphicsCachingOptions
+- FBODebugger
+- GaussianFilterShader
+- GeometryGroup
+- PlaybackDevice
+- NoiseTexture
+- NoiseTexture3D
+- RazerHydraSensor
+- SimpleAudioClip
 
 New python functionality:
-- Python created thread can run without H3D python code being run.
-- Copy constructors to H3DInterface.Vec classes.
-- new python functions:
-  - throwQuitAPIException
-  - getTopLevelFields
-  - createNode
-  - getNrHapticsDevices
-  - getHapticsDevice
-  - getNamedNode
-  - TimerCallback.removeCallback
-  - Field.getAccessType
-  - MField.size
-  - Node.clone
-- Python doxygen documentation added.
-- New constructor for Matrix4f/4d to construct matrix given
-translation, rotation and scale.
+- Added getTypeName, getValueAsString, setValueAsString, setName, getName, getFullName, isUpToDate, upToDate, replaceRoute, replaceRouteNoEvent, unrouteAll, getOwner and setOwner functions for fields.
+- Added takeScreenshot and findNodes function.
+
+H3DViewer updates:
+- Can now copy current log text to clipboard.
+- Added dialog to show profiling information if profiling is enabled.
+- TreeViewer only expand X3DGroupingNode at first view now.
+- QUAD_BUFFERED_STEREO should work properly again.
+- Updates to handle QUAD_BUFFERED_STEREO on an NVIDIA_3DVISION ready display with a non-quadro card. Note that this requires a special built wxWidgets. WxWidgets adopted a patch supplied by us so in the future this should work for standard releases of WxWidgets.
+- Faster startup due to optimizations.
 
 Compatability issues:
-- If deviceInfo field of force effect is not explicitly set then a force effect
-will now affect all connected devices and not just the first one. In python
-deviceInfo must be set using a list (SFInt32 -> MFInt32).
-- preRender/postRender C++ functions must be updated due to change of handling
-OpenGL attribute stack (it is quite small).
+- Changed default depth buffer type of FrameBufferTextureGenerator.
+- Not binary compatible due to changes to database and inheritance for some nodes.
+- ShadowTransform::shadowVolume is now of MFNode type, was SFNode.
+- Fields beamWidth and cutOffAngle in SpotLight node now have default values which makes sense as per update of X3D specification 3.3.
+
 
 ### H3DUtil ###
-H3DUtil is a utility library from the makers of H3DAPI. It is the library used by HAPI 1.2.  
-H3DUtil documentation is avaliable at the documentation page.
+H3DUtil is a utility library from the makers of H3DAPI. It is the library used by HAPI 1.3. H3DUtil documentation is avaliable at the documentation page.
 
-#### Changes for version 1.2 of H3DUtil: ####
-- CMake updates to configure build for MinGW toolchain.
-- New constructors to Matrix4f(d) to construct matrix from position,
-rotation and scale parameters.
-- Fixes to make a proper debian package.
-- New constructors for 4 component constructs to use their 3 component version
-plus a single value for the 4th component.
-- Fixed bugs with Dicom image loading.
-- Fixed a bug in assignment operator of AutoRefVector that would cause a crash
-if NULL was added to the vector .
-- Fixed a bug that could result in thread locking when a PeriodicThread was 
-destructed.
-- Updates to compile with gcc 4.5.
-- Fixed bug that could cause a problem when deallocating PixelImage instances
-created by the loadNrrdFile.
-- Fixed a bug that could result in callbacks not being removed from 
-removeAsynchronousCallback and clearAllCallbacks.
-- Added nrPixelComponents and convertToNormalizedData function to Image class.
+#### Changes for version 1.3 of H3DUtil: ####
+- Generated header is moved to CMake build directory and can only be found in H3DUtil/include after INSTALL project has been built.
+- Added profiling capabilities through H3DTimer.
+- Renamed FindTeem.cmake to FindH3DTeem.cmake in order to use CMakes new FindTeem module if it exists.
+- Speed optimizations that could affect some compilers.
+- Fixes to properly remove threads in all cases.
+- Added a InstallH3DUtilAndExternals.cmake package file which can be used by applications to package up needed files by the current H3DUtil build.
+- Properly pack ACKNOWLEDGMENTS file.
+- Memory leak fixes.
+- Added CMake option to include visual leak detector in H3DUtil.
+- Updates to CMake build system to build properly when TortoiseSVN is installed
+but the current H3D build is not a TortoiseSVN checkout.
+- Added enable/disable functions in Console which allow thread-safe disabling of console output.
+
+New classes:
+- H3DTimer
+
+New functions:
+- saveFreeImagePNG
+- Image::setByteAlignment
 
 ### HAPI ###
-HAPI is a haptics rendering C++ library from the makers of H3DAPI. It is the library used by H3DAPI 2.2 but can be used separately.  
-HAPI documentation is avaliable at the documentation page.
+HAPI is a haptics rendering C++ library from the makers of H3DAPI. It is the library used by H3DAPI 2.3 but can be used separately. HAPI documentation is avaliable at the documentation page.
 
 HAPI should be used when developing haptics applications (when H3DAPI is not desired). It is a modular library and is easily customized to the developers requirements.
 
-#### Changes for version 1.2 of HAPI: ####
-- Able to build HAPIDemo with wxWidget 2.8 and 2.9
-- Updates to configure build for MinGW build toolchain.
-- Updates to make a proper debian package.
-- Updates to ErrorHandler system for haptics devices.
-- Many CMake updates for building using a top CMakeLists.txt.
-- Fixed thread bugs with FalconHapticsDevice.
-- Added alwayFollowSurface option to RuspiniRenderer.
-- Added force and torque limits to haptics devices.
-- Support for 64 bit dhd (forcedimension).
-- Added torque to HapticForceField.
-- Added HapticRotationalSpring
-- Added damping and position_interpolation to HapticSpring
-- Added HaptionHapticsDevice, support for devices from Haption.
-- Added MLHIHapticsDevice, support for the Butterfly haptics magnetic 
-levitation haptics device.
-- Added EntactHapticsDevice, support for haptics devices from Entact Robotics.
-- Updates to Chai3DRenderer to use new Chai3D version.
-- Fixed a bug in SensableHapticsDevice that sent on torques in Nm instead of 
-Nmm which is expected by the driver.
-- Update CMake system to work with new 64-bit windows external libraries.
--Added rotation to HapticMasterDevice
+#### Changes for version 1.3 of HAPI: ####
+- Generated header is moved to CMake build directory and can only be found in HAPI/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Added profiling of haptic thread.
+- Moved fparser to be included as stand alone library.
+- Added a InstallHAPIAndExternals.cmake package file which can be used by applications to package up needed files by the current HAPI build.
+- Improved thread safety of GodObjectRenderer and RuspiniRenderer.
+- Fixed crashes on Windows caused by trying to use PhantomHapticsDevice on a system without OpenHaptics.
 
 New classes:
-- HapticRotationalSpring
-- HaptionHapticsDevice
-- MLHIHapticsDevice
-- EntactHapticsDevice
+- PlaybackHapticsDevice
 
 ### H3DPhysics ###
-H3DPhysics is a cross-platform implementation of the Rigid body physics component of X3D for use with H3D API. This version of H3DPhysics is tested against H3D API 2.2.0.
+H3DPhysics is a cross-platform implementation of the Rigid body physics component of X3D for use with H3D API. This version of H3DPhysics is tested against H3D API 2.3.0.
 
 This toolkit used to be named RigidBodyPhysics.
 
 H3DPhysics add rigid body physics models for use in H3D API. Which means that the user can build scenes in which object behave in a physically correct manner. Rigid body physics means that the objects are treated as solid, unchangeable sets of mass with a velocity. These bodies can be connected with the use of various form of joints, that allow one body's motion to affect another.
 
-H3DPhysics for H3D API use ODE (Open Dynamics Engine) for Rigid body physics by default but can also be compiled with support for PhysX or Bullet as physics engines. Also partial support for PhysX3 is implemented.  
+H3DPhysics for H3D API use ODE (Open Dynamics Engine) for Rigid body physics by default but can also be compiled with support for PhysX or Bullet as physics engines. Also support for PhysX3 is implemented.
+
 For soft body physics Bullet is default. PhysX can also be used.
 
-#### Changes for version 1.2 of H3DPhysics: ####
-- H3DPhysics additions to H3DAPIs python interface to get utility functions
-in python when using H3DPhysics.
-- The package is now called H3DPhysics instead of RigidBodyPhysics.
-It contains the X3D RigidBodyPhysics component as well as a well thought
-through suggestion for SoftBody capabilities. Of course H3DPhysics offers
-haptics capabilities for soft bodies as well.
-- New physics engine implemented. PhysX3, still in alpha state.
-- New physics engine implemented. SOFA, still in alpha state.
-- Fixes to make sure that gravity does not affect scene before all object
-are included at startup.
-- Support for SoftBodies using Bullet and PhysX. This support is still in beta.
-Bullet implementation is fairly stable.
-- Improved bullet support. Joint types are now supported with Bullet.
+#### Changes for version 1.3 of H3DPhysics: ####
+- Generated header is moved to CMake build directory and can only be found in H3DPhysics/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Updates to build on MinGW.
+- Memory leak fixes.
+- Doxygen documentation now links to python documentation as well.
+- Fixes to handle sliderJoint better for most physics engines.
+- Fixes to CollisionSpace and ODE.
+- Changed signature of some callback functions that are never used as callbacks. They now have return type void.
+- IndexedHexaSet, IndexedTetraSet, IndexedPointSet and IndexedElementSet are now more properly implemented and behaves like for example IndexedTriangleSet when it comes to colors, normals and texture coordinates.
+- The SoftBody node no longer assumes that its geometry is of type IndexedTetraSet but accepts all nodes with coord and index field.
+
+New fields:
+IndexedTetraSet::renderMode
+SliderJoint::sliderForce
+- H3DSoftBodyLoader::filename is now H3DSoftBodyLoader::url and is an MField. filename can be used a while longer at X3D level. On C++ level it can not.
+CollidableShape::clipPlanes
+CollisionCollection::collidableExceptionGroups
+
+New nodes:
+CollidableExceptionGroup
 
 ### MedX3D ###
-Source package for the toolkit MedX3D 1.3. Source builds against H3DAPI 2.2.0.
+Source package for the toolkit MedX3D 1.4. Source builds against H3DAPI 2.3.0.
 
 MedX3D is an implementation of Volume Rendering component of X3D.
 
@@ -297,35 +199,25 @@ The MedX3D toolkit also contains various extra nodes not specified in the specif
 
 MedX3D does not contain any specific haptic features.
 
-#### Changes for version 1.3 of MedX3D: ####
-- Fixes to raycaster for AMD cards.
-- CMake updates to configure properly for several compilers.
-- Made sure every node has an example file.
-- Changed color fields of several node to RGBA because of specification update.
-- Restructuring to set volume renderer through renderer field in X3DVolumeNode.
-- Added support for the enabled field in BlendedVolumeStyle
-- Added support for orthographic projection to ray caster code
-- Fixed a bug that would make the volume rendering disappear if one moved 
-into the volume.
-- Added support for float textures in MarchingCubes node.
+#### Changes for version 1.4 of MedX3D: ####
+- Generated header is moved to CMake build directory and can only be found in MedX3D/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Memory leak fixes which added some functions.
+- Fixed MultiVolumeRaycaster since it had quite a few bugs in it.
 
-New nodes
-- RayCaster
-- MultiVolumeRayCaster
-- SliceRenderer
-
-Removed nodes:
-- IsoSurfaceVolumeStyle
+Removed fields:
+- Removed multiVolumeRayCaster::depthTexture field due to it being a forgotten debug output which no longer affected anything.
 
 ### UI ###
-This is the source package of UI 2.2.0. It is compatible with H3DAPI 2.2.0. It contains the source code needed to build the UI. Cross platform, works on Windows/Linux/Mac OS.  
+This is the source package of UI 2.3.0. It is compatible with H3DAPI 2.3.0. It contains the source code needed to build the UI. Cross platform, works on Windows/Linux/Mac OS.  
 It is a collection of nodes that can be used to add a haptic user interface in a H3D scene.
 
 Allow for creation of buttons, slider bars etc touchable by haptics device or mouse..
 
-#### Changes for version 2.2 of UI: ####
-- All UI nodes now have examples.
-- Exposed appearance and textAppearance field for all labeled widgets.
-- CMake update to support various compilers on various systems.
-- Added isActive to SliderBar, indicates if sliderbar is in use.
+#### Changes for version 2.3 of UI: ####
+- Generated header is moved to CMake build directory and can only be found in UI/include after INSTALL project has been built.
+- Speed optimizations that could affect some compilers.
+- Updates to CMake build system to build properly when TortoiseSVN is installed but the current H3D build is not a TortoiseSVN checkout.
+- Renamed FindFreeType.cmake to FindH3DFreetype.cmake in order to use CMakes new FindFreetype module if it exists.
 
